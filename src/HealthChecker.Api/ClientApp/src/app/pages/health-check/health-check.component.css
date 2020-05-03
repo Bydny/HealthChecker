@@ -1,0 +1,12 @@
+
+.table-container {
+    width: 33%;
+    text-align: center;
+    margin: auto;
+    margin-top: 5%;
+}
+
+table {
+    width: 100%;
+    text-align: center;
+}

@@ -1,0 +1,63 @@
+
+<div class="table-container">
+  <mat-card>
+    <mat-card-title>Health Check</mat-card-title>
+    <mat-card-content>
+            <table>
+            <thead>
+              <th>Service</th>
+              <th>Time</th>
+              <th>Status</th>
+            </thead>
+            <tbody>
+              <tr *ngIf="westState$ | async as westState; else westFetching">
+                <td>WEST</td>
+                <td>{{westState.pingTime | date : 'mediumTime'}}</td>
+                <td>
+                  <img *ngIf="westState.isHealthy" src="../../../assets/checkmark.png" alt="Healthy">
+                  <img *ngIf="!westState.isHealthy" src="../../../assets/uncheckmark.png" alt="Healthy">
+                </td>
+              </tr>
+              <ng-template #westFetching>
+                <tr>
+                  <td>WEST</td>
+                  <td>fetching...</td>
+                  <td>fetching...</td>
+                </tr>
+              </ng-template>
+              <tr *ngIf="eastState$ | async as eastState; else eastFetching">
+                <td>EAST</td>
+                <td>{{eastState.pingTime | date : 'mediumTime'}}</td>
+                <td>
+                  <img *ngIf="eastState.isHealthy" src="../../../assets/checkmark.png" alt="Healthy">
+                  <img *ngIf="!eastState.isHealthy" src="../../../assets/uncheckmark.png" alt="Healthy">
+                </td>
+              </tr>
+              <ng-template #eastFetching>
+                <tr>
+                  <td>EAST</td>
+                  <td>fetching...</td>
+                  <td>fetching...</td>
+                </tr>
+              </ng-template>
+              <tr *ngIf="southState$ | async as southState; else southFetching">
+                <td>SOUTH</td>
+                <td>{{southState.pingTime | date : 'mediumTime'}}</td>
+                <td>
+                  <img *ngIf="southState.isHealthy" src="../../../assets/checkmark.png" alt="Healthy">
+                  <img *ngIf="!southState.isHealthy" src="../../../assets/uncheckmark.png" alt="Healthy">
+                </td>
+              </tr>
+              <ng-template #southFetching>
+                <tr>
+                  <td>SOUTH</td>
+                  <td>fetching...</td>
+                  <td>fetching...</td>
+                </tr>
+              </ng-template>
+            </tbody>
+          </table>
+    </mat-card-content>
+  </mat-card>
+</div>
+
