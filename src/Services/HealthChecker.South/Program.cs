@@ -8,7 +8,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
-using System.IO;
 
 namespace HealthChecker.South
 {
@@ -27,8 +26,8 @@ namespace HealthChecker.South
             try
             {
                 Configuration = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetParent(Environment.CurrentDirectory).Parent?.Parent?.FullName)
-                    .AddJsonFile("appsettings.json", false)
+                    .SetBasePath(AppContext.BaseDirectory)
+                    .AddJsonFile("appsettings.json", false, true)
                     .Build();
 
                 Log.Information("Creating service collection");
