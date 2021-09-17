@@ -7,6 +7,7 @@ export const SIGNALR = {
 };
 
 export const API = {
+    EXTERNAL_HOST,
     WEST: `${EXTERNAL_HOST}/api/health-check/west`,
     EAST: `${EXTERNAL_HOST}/api/health-check/east`,
     SOUTH: `${EXTERNAL_HOST}/api/health-check/south`,

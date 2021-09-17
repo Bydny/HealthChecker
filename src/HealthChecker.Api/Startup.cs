@@ -80,15 +80,18 @@ namespace HealthChecker.Api
                 endpoints.MapHub<SouthHealthCheckHub>("/health-check/south");
             });
 
-            app.UseSpa(spa =>
+            if (Boolean.Parse(Environment.GetEnvironmentVariable("USE_SPA")))
             {
-                spa.Options.SourcePath = "ClientApp";
-
-                if (env.IsDevelopment())
+                app.UseSpa(spa =>
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
-                }
-            });
+                    spa.Options.SourcePath = "ClientApp";
+
+                    if (env.IsDevelopment())
+                    {
+                        spa.UseAngularCliServer(npmScript: "start");
+                    }
+                });
+            }
 
             app.UseHangfireServer();
 

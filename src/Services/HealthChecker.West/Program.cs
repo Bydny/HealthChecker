@@ -28,6 +28,7 @@ namespace HealthChecker.West
                 Configuration = new ConfigurationBuilder()
                     .SetBasePath(AppContext.BaseDirectory)
                     .AddJsonFile("appsettings.json", false, true)
+                    .AddEnvironmentVariables()
                     .Build();
 
                 Log.Information("Creating service collection");

@@ -1,0 +1,51 @@
+version: '3.4'
+
+services:
+  frontend:
+    build:
+      dockerfile: Dockerfile
+      context: ./HealthChecker.Api/ClientApp/.
+    container_name: "health-checker-frontend"
+    restart: unless-stopped
+    environment:
+        EXTERNAL_HOST: https://localhost:5001
+    depends_on:
+      - healthchecker-api
+    ports:
+      - "4200:80"
+  healthchecker-api:
+    build:
+      context: .
+      dockerfile: HealthChecker.Api/Dockerfile
+    container_name: "health-checker-docker-api"
+    restart: always
+    environment:
+        ASPNETCORE_ENVIRONMENT: Development
+        USE_SPA: false
+        BusConfiguration__HostName: rabbitmq
+    depends_on:
+      - "rabbitmq"
+    command: ["./wait-for-it.sh", "rabbitmq"]
+    ports:
+      - "5001:5001"
+  healthchecker-south:
+    build:
+      context: .
+      dockerfile: Services/HealthChecker.South/Dockerfile
+    container_name: "health-checker-docker-south"
+    restart: always
+    environment:
+        ASPNETCORE_ENVIRONMENT: Development
+        BusConfiguration__HostName: rabbitmq
+    depends_on:
+      - "rabbitmq"
+  rabbitmq:
+    image: rabbitmq:3.9.5-management
+    hostname: "rabbitmq"
+    ports:
+      - "4369:4369"
+      - "5671:5671"
+      - "5672:5672"
+      - "25672:25672"
+      - "15671:15671"
+      - "15672:15672"
